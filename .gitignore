@@ -31,3 +31,6 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 next.config.js
+
+# React Native files
+.keystore
