@@ -30,7 +30,7 @@ const App = () => {
       <Formulario>
 
       </Formulario>
-      <Text style={styles.titulo}>{citas.length > 0 ? 'Administra tus citas' : 'No hay citas, agrega una'}</Text>
+      <Text style={styles.subtitulo}>{citas.length > 0 ? 'Administra tus citas' : 'No hay citas, agrega una'}</Text>
       <FlatList
         data={citas}
         renderItem={({ item }) => <Cita item={item} eliminarPaciente={eliminarPaciente} />}
@@ -47,12 +47,20 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: '#fff',
-    marginTop: 40,
+    marginTop: 50,
     marginBottom: 20,
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
-  }
+  },
+  subtitulo: {
+    color: '#fff',
+    marginTop: 20,
+    marginBottom: 20,
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });
 
 export default App;
