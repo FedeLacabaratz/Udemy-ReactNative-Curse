@@ -3,9 +3,10 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
+  FlatList
 } from 'react-native';
 import Cita from './components/Cita';
+import Formulario from './components/Formulario';
 
 const App = () => {
 
@@ -16,19 +17,26 @@ const App = () => {
     { id: "3", paciente: "Native", propietario: "Lucy", sintomas: "No Canta" },
   ]);
 
+  // Elimina los pacientes del state
+  const eliminarPaciente = (id) => {
+    setCitas((citasActuales) => {
+      return citasActuales.filter(cita => cita.id !== id);
+    })
+  }
+
   return (
-    <>
-      <View style={styles.contenedor}>
-        <Text style={styles.titulo} >Administrador de Citas</Text>
-        <FlatList
-          data={citas}
-          renderItem={({item}) => (
-            <Cita cita={item}/>
-          )}
-          keyExtractor={ cita => cita.id}
-        />
-      </View>
-    </>
+    <View style={styles.contenedor}>
+      <Text style={styles.titulo}>Administrador de Citas</Text>
+      <Formulario>
+
+      </Formulario>
+      <Text style={styles.titulo}>{citas.length > 0 ? 'Administra tus citas' : 'No hay citas, agrega una'}</Text>
+      <FlatList
+        data={citas}
+        renderItem={({ item }) => <Cita item={item} eliminarPaciente={eliminarPaciente} />}
+        keyExtractor={cita => cita.id}
+      />
+    </View>
   );
 };
 
@@ -40,6 +48,7 @@ const styles = StyleSheet.create({
   titulo: {
     color: '#fff',
     marginTop: 40,
+    marginBottom: 20,
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
