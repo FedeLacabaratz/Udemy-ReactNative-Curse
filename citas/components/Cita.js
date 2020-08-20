@@ -1,24 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     StyleSheet,
     Text,
     View,
+    TouchableHighlight
 } from 'react-native';
 
-const Cita = ({ cita }) => {
+const Cita = ({ item, eliminarPaciente }) => {
+
+    const dialogoEliminar = id => {
+        eliminarPaciente(id)
+    }
+
     return (
         <View style={styles.cita}>
             <View>
                 <Text style={styles.label}>Paciente: </Text>
-                <Text style={styles.texto}>{cita.paciente}</Text>
+                <Text style={styles.texto}>{item.paciente}</Text>
             </View>
             <View>
                 <Text style={styles.label}>Propietario: </Text>
-                <Text style={styles.texto}>{cita.propietario}</Text>
+                <Text style={styles.texto}>{item.propietario}</Text>
             </View>
             <View>
                 <Text style={styles.label}>Síntomas: </Text>
-                <Text style={styles.texto}>{cita.sintomas}</Text>
+                <Text style={styles.texto}>{item.sintomas}</Text>
+            </View>
+            <View>
+                <TouchableHighlight onPress={ () => dialogoEliminar(item.id)} style={styles.btnEliminar}>
+                    <Text style={styles.textoEliminar}> Eliminar Cita &times; </Text>
+                </TouchableHighlight>
             </View>
         </View>
     );
@@ -40,6 +51,17 @@ const styles = StyleSheet.create({
     },
     texto: {
         fontSize: 16,
+    },
+    btnEliminar: {
+        padding: 10,
+        backgroundColor: 'red',
+        marginVertical: 10
+    },
+    textoEliminar: {
+        color: '#fff',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        textTransform: 'uppercase'
     }
 });
 
