@@ -6,11 +6,13 @@ import {
   TextInput,
   Button,
   TouchableHighlight,
-  Alert
+  Alert,
+  ScrollView
 } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import shortid from 'shortid';
 
-const Formulario = () => {
+const Formulario = ({citas, setCitas, setMostrarForm}) => {
 
   const [paciente, setPaciente] = useState('');
   const [propietario, setPropietario] = useState('');
@@ -62,6 +64,21 @@ const Formulario = () => {
       mostrarAlerta();
       return;
     }
+
+    // Crear una nueva cita
+    const nuevaCita = { paciente, propietario, telefono, fecha, hora, sintomas };
+    nuevaCita.id = shortid.generate();
+
+    // Agregar al state
+    const citasNuevo = [...citas, nuevaCita];
+    setCitas(citasNuevo)
+
+    // Ocultar el formulario
+    setMostrarForm(false)
+
+    // Resetear el formulario
+
+    
   };
 
   // Muestra la alerta si falla la validación
@@ -77,7 +94,7 @@ const Formulario = () => {
 
   return (
     <>
-      <View style={styles.formulario}>
+      <ScrollView style={styles.formulario}>
         <View>
           <Text style={styles.label}>Paciente:</Text>
           <TextInput
@@ -136,7 +153,6 @@ const Formulario = () => {
             multiline
             style={styles.input}
             onChangeText={texto => setSintomas(texto)}
-            keyboardType='numeric'
           />
         </View>
         <View>
@@ -144,7 +160,7 @@ const Formulario = () => {
             <Text style={styles.textoSubmit}>Crear Nueva Cita</Text>
           </TouchableHighlight>
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 }
@@ -154,7 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    marginHorizontal: '2.5%'
+    borderRadius: 15
   },
   label: {
     fontWeight: 'bold',
@@ -172,7 +188,8 @@ const styles = StyleSheet.create({
   btnSubmit: {
       padding: 10,
       backgroundColor: '#005aa3',
-      marginVertical: 10
+      marginTop: 10,
+      marginBottom: 30
   },
   textoSubmit: {
       color: '#fff',

@@ -13,7 +13,7 @@ const Cita = ({ item, eliminarPaciente }) => {
     }
 
     return (
-        <View style={styles.cita}>
+        <View style={styles.cita} onStartShouldSetResponder={() => true}>
             <View>
                 <Text style={styles.label}>Paciente: </Text>
                 <Text style={styles.texto}>{item.paciente}</Text>
@@ -38,16 +38,15 @@ const Cita = ({ item, eliminarPaciente }) => {
 const styles = StyleSheet.create({
     cita: {
         backgroundColor: '#fff',
-        borderBottomColor: '#e1e1e1',
-        borderStyle: 'solid',
-        borderBottomWidth: 1,
+        marginBottom: 15,
         paddingVertical: 20,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        borderRadius: 15
     },
     label: {
         fontWeight: 'bold',
         fontSize: 18,
-        marginTop: 20
+        marginTop: 10
     },
     texto: {
         fontSize: 16,
@@ -55,7 +54,8 @@ const styles = StyleSheet.create({
     btnEliminar: {
         padding: 10,
         backgroundColor: 'red',
-        marginVertical: 10
+        marginTop: 30,
+        marginBottom: 10
     },
     textoEliminar: {
         color: '#fff',
