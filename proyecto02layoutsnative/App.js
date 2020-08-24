@@ -1,113 +1,155 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 
 import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
+  Image,
   Text,
-  StatusBar,
+  ScrollView,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const App: () => React$Node = () => {
+const App = () => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
+      <ScrollView>
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            style={styles.banner}
+            source={require('./assets/img/bg.jpg')}
+          />
+        </View>
+        <View style={styles.contenedor}>
+          <Text style={styles.titulo}>Qué hacer en Paris</Text>
+          <ScrollView
+            horizontal
+          >
+            <View>
+              <Image
+                style={styles.ciudad}
+                source={require('./assets/img/actividad1.jpg')}
+              />
             </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
+            <View>
+              <Image
+                style={styles.ciudad}
+                source={require('./assets/img/actividad2.jpg')}
+              />
             </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
+            <View>
+              <Image
+                style={styles.ciudad}
+                source={require('./assets/img/actividad3.jpg')}
+              />
             </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
+            <View>
+              <Image
+                style={styles.ciudad}
+                source={require('./assets/img/actividad4.jpg')}
+              />
             </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
+            <View>
+              <Image
+                style={styles.lastCiudad}
+                source={require('./assets/img/actividad5.jpg')}
+              />
             </View>
-            <LearnMoreLinks />
+          </ScrollView>
+          <View>
+            <Text style={styles.titulo}>Los Mejores Alojamientos</Text>
           </View>
-        </ScrollView>
-      </SafeAreaView>
+          <View>
+            <View>
+              <Image
+                style={styles.mejores}
+                source={require('./assets/img/mejores1.jpg')}
+              />
+            </View>
+            <View>
+              <Image
+                style={styles.mejores}
+                source={require('./assets/img/mejores2.jpg')}
+              />
+            </View>
+            <View>
+              <Image
+                style={styles.mejores}
+                source={require('./assets/img/mejores3.jpg')}
+              />
+            </View>
+          </View>
+          <View>
+            <Text style={styles.titulo}>Hospedajes en LA</Text>
+          </View>
+          <View
+            style={styles.listado}
+          >
+            <View style={styles.listadoItem}>
+              <Image
+                style={styles.mejores}
+                source={require('./assets/img/hospedaje1.jpg')}
+              />
+            </View>
+            <View style={styles.listadoItem}>
+              <Image
+                style={styles.mejores}
+                source={require('./assets/img/hospedaje2.jpg')}
+              />
+            </View>
+            <View style={styles.listadoItem}>
+              <Image
+                style={styles.mejores}
+                source={require('./assets/img/hospedaje3.jpg')}
+              />
+            </View>
+            <View style={styles.listadoItem}>
+              <Image
+                style={styles.mejores}
+                source={require('./assets/img/hospedaje4.jpg')}
+              />
+            </View>
+          </View>
+        </View>
+      </ScrollView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  banner: {
+    height: 250,
+    flex: 1,
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  titulo: {
+    fontWeight: 'bold',
+    fontSize: 22,
+    marginVertical: 20,
   },
-  body: {
-    backgroundColor: Colors.white,
+  contenedor: {
+    marginHorizontal: 10,
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  ciudad: {
+    width: 250,
+    height: 300,
+    marginRight: 10
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
+  lastCiudad: {
+    width: 250,
+    height: 300,
+    marginRight: 0
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
+  mejores: {
+    width: '100%',
+    height: 200,
+    marginVertical: 5
   },
-  highlight: {
-    fontWeight: '700',
+  listado: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 20
   },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  listadoItem: {
+    flexBasis: '48.75%',
   },
 });
 
