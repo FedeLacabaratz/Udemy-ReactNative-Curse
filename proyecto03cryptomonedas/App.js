@@ -1,113 +1,65 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
+  Image,
   View,
-  Text,
-  StatusBar,
 } from 'react-native';
+import axios from 'axios';
+import Header from './components/Header';
+import Formulario from './components/Formulario';
+import Cotizacion from './components/Cotizacion';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const App = () => {
 
-const App: () => React$Node = () => {
+  const [moneda, setMoneda] = useState('');
+  const [cryptomoneda, setCryptomoneda] = useState('');
+  const [consultarAPI, setConsultarAPI] = useState(false);
+  const [resultado, setResultado] = useState({});
+
+  useEffect(() => {
+    const cotizarCryptomoneda = async () => {
+      if (consultarAPI) {
+        // Consultar la API para obtener la cotización
+        const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${cryptomoneda}&tsyms=${moneda}`;
+        const resultado = await axios.get(url);
+        setResultado(resultado.data.DISPLAY[cryptomoneda][moneda]);
+        setConsultarAPI(false);
+      }
+    }
+    cotizarCryptomoneda();
+  }, [consultarAPI])
+
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <Header />
+      <Image
+        style={styles.imagen}
+        source={require('./assets/img/cryptomonedas.png')}
+      />
+      <View style={styles.contenido}>
+        <Formulario
+          moneda={moneda}
+          cryptomoneda={cryptomoneda}
+          setMoneda={setMoneda}
+          setCryptomoneda={setCryptomoneda}
+          setConsultarAPI={setConsultarAPI}
+        />
+      </View>
+      <Cotizacion
+        resultado={resultado}
+      />
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  imagen: {
+    width: '100%',
+    height: 150,
+    marginRight: '2.5%',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  contenido: {
+    marginHorizontal: '2.5%',
   },
 });
 
