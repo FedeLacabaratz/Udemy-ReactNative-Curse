@@ -22,5 +22,3 @@ React Native Course to learn about:
 
 - Integration of useReducer and useContext in React Native and much more!.
 
-## LINKS TO THE PROJECTS (This section will be updated as more projects are being completed)
-
