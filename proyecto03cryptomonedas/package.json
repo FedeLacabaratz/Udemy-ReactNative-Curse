@@ -10,6 +10,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/picker": "^1.6.6",
+    "axios": "^0.20.0",
     "react": "16.13.1",
     "react-native": "0.63.2"
   },
