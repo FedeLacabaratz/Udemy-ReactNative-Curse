@@ -1,18 +1,66 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 
-const Clima = () => {
-    return (  
-        <>
-            <Text>Desde Clima</Text>
-        </>
+const Clima = ({ resultado }) => {
+
+    const { name, main } = resultado;
+
+    if (!name) return null;
+
+    // Grados Kelvin
+    const kelvin = 273.15;
+
+    return (
+        <View style={styles.clima}>
+            <Text style={[styles.texto, styles.actual]}>
+                {(main.temp - kelvin).toFixed(1)}
+                <Text style={styles.temperatura}>{' '}
+                    &#x2103;
+                </Text>
+                <Image 
+                    style={{width: 66, height: 58}}
+                    source={{ uri: `http://openweathermap.org/img/w/${resultado.weather[0].icon}.png`}}
+                />
+            </Text>
+            <View style={styles.temperaturas}>
+                <Text style={styles.texto}>Min. {' '}
+                    <Text style={styles.temperatura}>
+                        {(main.temp_min - kelvin).toFixed(1)} &#x2103;
+                    </Text>
+                </Text>
+                <Text style={styles.texto}>Max. {' '}
+                    <Text style={styles.temperatura}>
+                        {(main.temp_max - kelvin).toFixed(1)} &#x2103;
+                    </Text>
+                </Text>
+            </View>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     clima: {
-
+        marginBottom: 20,
     },
+    texto: {
+        color: '#fff',
+        fontSize: 20,
+        textAlign: 'center',
+        marginRight: 20,
+    },
+    actual: {
+        fontSize: 80,
+        marginRight: 0,
+        fontWeight: 'bold',
+    },
+    temperatura: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    temperaturas: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    }, 
 });
- 
+
 export default Clima;
