@@ -1,113 +1,107 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
-  StatusBar,
+  TextInput,
+  Button,
+  TouchableHighlight,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-const App: () => React$Node = () => {
+const App = () => {
+
+  const [inputTexto, setInputTexto] = useState('');
+  const [nombreStorage, setNombreStorage] = useState('');
+
+  useEffect(() => {
+    obtenerDatosStorage();
+  }, []);
+
+  const guardarDatos = async () => {
+    try {
+      await AsyncStorage.setItem('nombre', inputTexto);
+      setNombreStorage(inputTexto);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const obtenerDatosStorage = async () => {
+    try {
+      const nombre = await AsyncStorage.getItem('nombre');
+      setNombreStorage(nombre);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const eliminarDatos = async () => {
+    try {
+      await AsyncStorage.removeItem('nombre');
+      setNombreStorage('');
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <View style={styles.contenedor}>
+        {nombreStorage ? <Text>Hola: {nombreStorage}</Text> : null}
+
+        <TextInput
+          placeholder="Escribe tu Nombre"
+          style={styles.input}
+          onChangeText={texto => setInputTexto(texto)}
+        />
+
+        <Button
+          title="Guardar"
+          color="#333"
+          onPress={() => guardarDatos()}
+        />
+
+        {nombreStorage ? (
+          <TouchableHighlight
+            onPress={() => eliminarDatos()}
+            style={styles.btnEliminar}
+          >
+            <Text style={styles.textoEliminar}>Eliminar Nombre &times;</Text>
+          </TouchableHighlight>
+        ) : null}
+
+      </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  contenedor: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  input: {
+    borderColor: '#666',
+    borderBottomWidth: 1,
+    textAlign: 'center',
+    width: 300,
+    height: 40,
   },
-  body: {
-    backgroundColor: Colors.white,
+  btnEliminar: {
+    backgroundColor: 'red',
+    marginTop: 20,
+    padding: 10,
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  textoEliminar: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    width: 280,
   },
 });
 
