@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,23 +11,34 @@ import {
 } from 'react-native';
 import Cita from './components/Cita';
 import Formulario from './components/Formulario';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const App = () => {
-
-  const [mostrarForm, setMostrarForm] = useState(false)
-
+  
   // Definir el state de citas
-  const [citas, setCitas] = useState([
-    { id: "1", paciente: "Hook", propietario: "Fede", sintomas: "No Come" },
-    { id: "2", paciente: "Redux", propietario: "Yami", sintomas: "No Duerme" },
-    { id: "3", paciente: "Native", propietario: "Lucy", sintomas: "No Canta" },
-  ]);
+  const [citas, setCitas] = useState([]);
+  const [mostrarForm, setMostrarForm] = useState(false);
+
+  useEffect(() => {
+    const obtenerCitasStorage = async () => {
+      try {
+        const citasStorage = await AsyncStorage.getItem('citas');
+        if(citasStorage) {
+          setCitas(JSON.parse(citasStorage))
+        }
+      } catch (error) {
+        console.log(error)
+      }  
+    };  
+    obtenerCitasStorage();
+  }, []);  
 
   // Elimina los pacientes del state
   const eliminarPaciente = (id) => {
-    setCitas((citasActuales) => {
-      return citasActuales.filter(cita => cita.id !== id);
-    })
+
+    const citasFiltradas = citas.filter(cita => cita.id !== id);
+    setCitas(citasFiltradas);
+    guardarCitasStorage(JSON.stringify(citasFiltradas));
   };
 
   // Muestra u oculta el formulario
@@ -38,6 +49,15 @@ const App = () => {
   // Ocultar el teclado
   const cerrarTeclado = () => {
     Keyboard.dismiss();
+  };
+
+  // Almacenar las citas en storage
+  const guardarCitasStorage = async (citasJSON) => {
+    try {
+      await AsyncStorage.setItem('citas', citasJSON);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -58,6 +78,7 @@ const App = () => {
                   citas={citas}
                   setCitas={setCitas}
                   setMostrarForm={setMostrarForm}
+                  guardarCitasStorage={guardarCitasStorage}
                 />
               </View>
             </>
