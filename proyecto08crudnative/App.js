@@ -1,12 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
 } from 'react-native';
 
 import Inicio from './views/Inicio';
@@ -36,6 +31,7 @@ const theme = {
 const App = () => {
   return (
     <>
+    <PaperProvider>
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Inicio"
@@ -54,10 +50,10 @@ const App = () => {
             component={Inicio}
             options={({navigation, route}) => ({
               headerTitleAlign: 'center',
-              headerLeft: (props) => <BarraSuperior {...props} 
-                                  navigation={navigation}
-                                  route={route}
-                                />
+              // headerLeft: (props) => <BarraSuperior {...props} 
+              //                     navigation={navigation}
+              //                     route={route}
+              //                   />
             })}
           />
           <Stack.Screen
@@ -76,6 +72,7 @@ const App = () => {
           />
         </Stack.Navigator>
       </NavigationContainer>
+    </PaperProvider>
     </>
   );
 };
