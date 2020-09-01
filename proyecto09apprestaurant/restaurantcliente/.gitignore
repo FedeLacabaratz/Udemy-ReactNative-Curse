@@ -34,3 +34,6 @@ next.config.js
 
 # React Native files
 .keystore
+
+# config file from Firebase
+config.js
