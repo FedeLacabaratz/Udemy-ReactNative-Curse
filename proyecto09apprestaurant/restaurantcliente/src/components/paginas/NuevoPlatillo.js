@@ -8,9 +8,9 @@ import FileUploader from 'react-firebase-file-uploader';
 const NuevoPlatillo = () => {
 
     // State para las imagenes
-    const[subiendo, setSubiendo] = useState(false);
-    const[progreso, setProgreso] = useState(0);
-    const[urlimagen, setUrlimagen] = useState('');
+    const [subiendo, setSubiendo] = useState(false);
+    const [progreso, setProgreso] = useState(0);
+    const [urlimagen, setUrlimagen] = useState('');
 
     // Context con las operaciones de firebase
     const { firebase } = useContext(FirebaseContext);
@@ -29,20 +29,21 @@ const NuevoPlatillo = () => {
         },
         validationSchema: Yup.object({
             nombre: Yup.string()
-                        .min(3, 'Los Platillos deben tener al menos 3 caracteres')
-                        .required('El nombre del platillo es obligatorio'),
+                .min(3, 'Los Platillos deben tener al menos 3 caracteres')
+                .required('El nombre del platillo es obligatorio'),
             precio: Yup.number()
-                        .min(1, 'Debes agregar un número')
-                        .required('El precio es obligatorio'),
+                .min(1, 'Debes agregar un número')
+                .required('El precio es obligatorio'),
             categoria: Yup.string()
-                        .required('La categoría es obligatoria'),
+                .required('La categoría es obligatoria'),
             descripcion: Yup.string().trim()
-                        .min(10, 'La descripción debe de contener al menos 10 caracteres')
-                        .required('La descripción es obligatoria'),
+                .min(10, 'La descripción debe de contener al menos 10 caracteres')
+                .required('La descripción es obligatoria'),
         }),
         onSubmit: platillo => {
             try {
                 platillo.existencia = true;
+                platillo.imagen = urlimagen;
                 firebase.db.collection('productos').add(platillo)
 
                 // Redireccionar
@@ -64,19 +65,23 @@ const NuevoPlatillo = () => {
         console.log(error);
     };
 
-    const handleUploadSuccess = nombre => {
+    const handleUploadSuccess = async nombre => {
         setProgreso(100);
         setSubiendo(false);
 
-        // Almacenar la URL de destino
-        const url = firebase
-                    .storage
-                    .ref("productos")
-                    .child(nombre)
-                    .getDownloadURL();
+        try {
+            // Almacenar la URL de destino
+            const url = await firebase
+                .storage
+                .ref("productos")
+                .child(nombre)
+                .getDownloadURL();
 
-        console.log(url);
-        setUrlimagen(url);
+            console.log(url);
+            setUrlimagen(url);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleProgress = progreso => {
@@ -157,7 +162,7 @@ const NuevoPlatillo = () => {
                         ) : null}
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="imagen">Imagen</label>
-                            <FileUploader 
+                            <FileUploader
                                 accept="image/*"
                                 id="imagen"
                                 name="imagen"
@@ -169,6 +174,18 @@ const NuevoPlatillo = () => {
                                 onProgress={handleProgress}
                             />
                         </div>
+                        {subiendo && (
+                            <div className="h-8 relative w-full border">
+                                <div className="bg-green-500 absolute left-0 top-0 text-white px-2 text-sm h-8 flex justify-center items-center" style={{ width: `${progreso}%`}}>
+                                    {progreso}%
+                                </div>
+                            </div>
+                        )}
+                        {urlimagen && (
+                            <p className="bg-green-500 text-white p-3 text-center h-8 my-5 flex justify-center items-center">
+                                La imagen se subio correctamente
+                            </p>
+                        )}
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="descripcion">Descripción</label>
                             <textarea
