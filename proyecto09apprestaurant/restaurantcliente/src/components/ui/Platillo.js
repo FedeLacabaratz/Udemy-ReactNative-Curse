@@ -25,7 +25,6 @@ const Platillo = ({ platillo }) => {
         } catch (error) {
             console.log(error);
         }
-        
     };
 
     return (
