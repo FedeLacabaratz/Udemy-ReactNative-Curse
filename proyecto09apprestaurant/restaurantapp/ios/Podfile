@@ -25,6 +25,7 @@ end
 
 target 'restaurantapp-tvOS' do
   # Pods for restaurantapp-tvOS
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'restaurantapp-tvOSTests' do
     inherit! :search_paths
