@@ -38,7 +38,7 @@ const DetallePlatillo = () => {
                         style={globalStyles.boton}
                         onPress={() => navigation.navigate("FormularioPlatillo")}
                     >
-                        <Text style={globalStyles.botonTexto}>Ordenar Platillo</Text>
+                        <Text style={globalStyles.botonTexto}>Ordenar este Producto</Text>
                     </Button>
                 </FooterTab>
             </Footer>

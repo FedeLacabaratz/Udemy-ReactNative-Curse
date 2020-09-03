@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { FirebaseContext } from '../../firebase';
 import Orden from '../ui/Orden';
 
-const Ordenes = () => {
+const OrdenesEntregadas = () => {
 
     // Context con las operaciones de firebase
     const { firebase } = useContext(FirebaseContext);
@@ -12,7 +12,7 @@ const Ordenes = () => {
 
     useEffect(() => {
         const obtenerOrdenes = async () => {
-            await firebase.db.collection('ordenes').where('completado', '==', false).onSnapshot(manejarSnapshot)
+            await firebase.db.collection('ordenes').where('completado', '==', true).onSnapshot(manejarSnapshot)
         }
         obtenerOrdenes();
         // eslint-disable-next-line
@@ -30,7 +30,7 @@ const Ordenes = () => {
 
     return (
         <>
-            <h1 className="text-3xl font-light mb-4">Ordenes Activas</h1>
+            <h1 className="text-3xl font-light mb-4">Ordenes Entregadas</h1>
             <div className="sm:flex sm:flex-wrap -mx-3">
                 {ordenes.map(orden => (
                     <Orden
@@ -43,4 +43,4 @@ const Ordenes = () => {
     );
 };
 
-export default Ordenes;
+export default OrdenesEntregadas;
