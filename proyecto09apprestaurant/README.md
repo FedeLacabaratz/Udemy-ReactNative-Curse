@@ -18,4 +18,4 @@ In this side, the customers will have the chance to select one or more products,
 
 Please check your Firebase site and use this option and information before executing anything. You just have to copy and paste this inside your firebase folder and name the file "config.js". Then you'll be ready to give it a try and don't forget to create your menu first so you have something to order. Check this screenshot on what you should be extracting as information to paste inside your file.
 
-![Screenshot taken from my Firebase site](./config.jpg)
+![Screenshot taken from my Firebase site](https://github.com/FedeLacabaratz/Udemy-ReactNative-Curse/blob/proyecto09apprestaurant/proyecto09apprestaurant/config.jpg)
