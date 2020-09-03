@@ -1,4 +1,4 @@
-# Bistro APP
+# BISTRO APP
 
 ## Introduction
 
