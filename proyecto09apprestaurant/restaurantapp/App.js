@@ -70,14 +70,16 @@ const App = () => {
                 name="ResumenPedido"
                 component={ResumenPedido}
                 options={{
-                  title: "Resumen del Pedido"
+                  title: "Resumen del Pedido",
+                  headerLeft: null
                 }}
               />
               <Stack.Screen
                 name="ProgresoPedido"
                 component={ProgresoPedido}
                 options={{
-                  title: "Progreso del Pedido"
+                  title: "Progreso del Pedido",
+                  headerLeft: null
                 }}
               />
             </Stack.Navigator>

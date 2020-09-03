@@ -10,15 +10,28 @@ const Orden = ({ orden }) => {
     const { firebase } = useContext(FirebaseContext);
 
     // Definir el tiempo de entrega en tiempo real
-    const definirTiempo = id => {
+    const definirTiempo = async id => {
         try {
-            firebase.db.collection('ordenes')
+            await firebase.db.collection('ordenes')
                 .doc(id)
                 .update({
                     tiempoEntrega: tempEntrega
                 })
         } catch (error) {
             console.log(error)
+        }
+    };
+
+    // Completa el estado de una orden
+    const completarOrden = async id => {
+        try {
+            await firebase.db.collection('ordenes')
+                        .doc(id)
+                        .update({
+                            completado: true
+                        })
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -29,7 +42,7 @@ const Orden = ({ orden }) => {
                 {orden.orden.map(platillos => (
                     <p key={platillos.id} className="text-gray-600">{platillos.cantidad} {platillos.nombre}</p>
                 ))}
-                <p className="text-gray-700 font-bold">Total a Pagar: {orden.total}€</p>
+                <p className="text-gray-700 font-bold">Total: {orden.total} €</p>
                 {orden.tiempoEntrega === 0 && (
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -52,6 +65,20 @@ const Orden = ({ orden }) => {
                             Definir Tiempo
                         </button>
                     </div>
+                )}
+                {orden.tiempoEntrega > 0 && (
+                    <p className="text-gray-700">Tiempo de Entrega:
+                        <span className="font-bold"> {orden.tiempoEntrega} minutos</span>
+                    </p>
+                )}
+                {!orden.completado && orden.tiempoEntrega > 0 && (
+                    <button
+                        type="button"
+                        className="bg-blue-800 hover:bg-blue-700 w-full mt-5 p-2 text-white uppercase font-bold"
+                        onClick={() => completarOrden(orden.id)}
+                    >
+                        Marcar orden lista
+                    </button>
                 )}
             </div>
         </div>

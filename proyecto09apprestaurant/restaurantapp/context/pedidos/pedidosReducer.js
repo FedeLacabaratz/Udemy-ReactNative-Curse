@@ -31,6 +31,8 @@ export default (state, action) => {
         case PEDIDO_ORDENADO:
             return {
                 ...state,
+                pedido: [],
+                total: 0,
                 idPedido: action.payload
             }    
 
