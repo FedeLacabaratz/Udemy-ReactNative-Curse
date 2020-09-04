@@ -8,11 +8,11 @@ This application allows both customers (by using the React Native App) and owner
 
 ## The Web Client Side (made with ReactJS)
 
-In here you will be able to create the products you are going to serve and also classify them from "Available" to "Unavailable" in case you want to take them out of the menu provisionally. This side of the project will allow the owners or managers in the kitchen to communicate with the customers on accepting their dishes and also providing them with a countdown to theis orders to be ready to be picked up. Once picked up by clicking on "order is ready" button, will send this order/s to the "Delivered Orders" menu.
+In here you will be able to create the products you are going to serve and also classify them from "Available" to "Unavailable" in case you want to take them out of the menu provisionally. This will allow owners or managers in a business to successfully communicate with the customers on accepting their orders and also providing them with a countdown whenever they are ready to be picked up. Once picked up by clicking on the "order is ready" button, this will send this order/s to the "Delivered Orders" menu.
 
 ## The App Side (made with React Native)
 
-In this side, the customers will have the chance to select one or more products, edit and add as many as they want before confirming and ordering. Once the order is purchased, the customer will receive a countdown clock screen in which they will be able to track time on their orders to be ready. Once an order is announced ready, they will also have the option to start the process over again.
+In this side, customers will have the chance to select one or more products, edit and add as many as they want before confirming and ordering. Once the order is made, the customer will receive a countdown clock screen in which they will be able to track time on their orders until they are ready. Once an order is announced as ready, they will also have the option to start the process all over again.
 
 ### The "config.js" file
 
