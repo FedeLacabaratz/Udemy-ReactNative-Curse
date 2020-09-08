@@ -77,7 +77,7 @@ const resolvers = {
 
             // Dar acceso a la app
             return {
-                token: crearToken(existeUsuario, process.env.SECRET, '2hr')
+                token: crearToken(existeUsuario, process.env.SECRET, '24hr')
             }
         },
         nuevoProyecto: async (_, { input }, ctx) => {
