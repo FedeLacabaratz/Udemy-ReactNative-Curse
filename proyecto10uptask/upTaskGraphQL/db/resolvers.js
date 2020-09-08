@@ -1,11 +1,9 @@
-
 const Usuario = require('../models/Usuario');
 const Proyecto = require('../models/Proyecto');
-const tarea = require('../models/tarea');
+const Tarea = require('../models/tarea');
+
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Tarea = require('../models/tarea');
-const { findByIdAndDelete } = require('../models/Usuario');
 require('dotenv').config({ path: '.env' });
 
 // Crea y firma un jsonwebtoken
@@ -36,7 +34,7 @@ const resolvers = {
     },
     Mutation: {
         crearUsuario: async (_, { input }) => {
-            const { password, email } = input;
+            const { email, password } = input;
 
             // Si el usuario existe
             const existeUsuario = await Usuario.findOne({ email });
