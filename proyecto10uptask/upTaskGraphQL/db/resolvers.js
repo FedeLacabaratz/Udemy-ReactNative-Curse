@@ -8,9 +8,9 @@ require('dotenv').config({ path: '.env' });
 
 // Crea y firma un jsonwebtoken
 const crearToken = (usuario, secreta, expiresIn) => {
-    const { id, email } = usuario;
+    const { id, email, nombre } = usuario;
 
-    return jwt.sign({ id, email }, secreta, { expiresIn });
+    return jwt.sign({ id, email, nombre }, secreta, { expiresIn });
 };
 
 const resolvers = {
@@ -75,7 +75,7 @@ const resolvers = {
 
             // Dar acceso a la app
             return {
-                token: crearToken(existeUsuario, process.env.SECRET, '24hr')
+                token: crearToken(existeUsuario, process.env.SECRET, '4hr')
             }
         },
         nuevoProyecto: async (_, { input }, ctx) => {
