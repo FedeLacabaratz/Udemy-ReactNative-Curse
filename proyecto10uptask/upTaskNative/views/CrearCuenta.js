@@ -48,7 +48,7 @@ const CrearCuenta = () => {
                 variables: {
                     input: {
                         nombre,
-                        email: email.toLowerCase(),
+                        email,
                         password
                     }
                 }
