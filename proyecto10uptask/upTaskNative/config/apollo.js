@@ -1,20 +1,29 @@
 import { ApolloClient } from '@apollo/client';
 import { Platform } from 'react-native';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
+import { createHttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
+import AsyncStorage from '@react-native-community/async-storage';
+
+const httpLink = createHttpLink({
+    uri: Platform.OS === 'ios' ? 'http://localhost:4000/' : 'http://10.0.2.2:4000/'
+});
+
+const authLink = setContext(async (_, { headers }) => {
+    // Leer el token
+    const token = await AsyncStorage.getItem('token');
+    
+    return{
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : ''
+        }
+    }
+});
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
-    link: (Platform.OS === 'ios') ?
-        // Para ios
-        new HttpLink({
-            uri: 'http://localhost:4000/'
-        })
-        :
-        //Para android
-        new HttpLink({
-            uri: 'http://10.0.2.2:4000/'
-        })
+    link: authLink.concat(httpLink)
 });
 
 export default client;
