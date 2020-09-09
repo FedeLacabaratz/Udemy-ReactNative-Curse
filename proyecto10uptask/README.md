@@ -18,4 +18,4 @@ In here users will be able to perform CRUD operations once you log in.
 
 This project is protected with env files so you will have to create your own DB with MongoDB and you secret word, and then configurate you .env file in order to make it work. A link to the full size screens of the entire up is being left for your down below. I hope you enjoy it!
 
-[Screenshot with full size screens of the app](./imagenScreen/upTaskScreens.jpg)
+[Screenshot with full size screens of the app](./imagenScreens/upTaskScreens.jpg)
