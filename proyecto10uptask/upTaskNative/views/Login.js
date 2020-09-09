@@ -84,7 +84,8 @@ const Login = () => {
                     >
                         <Input
                             placeholder="Email"
-                            onChangeText={texto => setEmail(texto)}
+                            onChangeText={texto => setEmail(texto.toLowerCase())}
+                            value={email}
                         />
                     </Item>
                     <Item
